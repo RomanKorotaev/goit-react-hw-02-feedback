@@ -14,7 +14,7 @@ class App extends Component {
 
 
 // Общий обработчик для нескольких разных кнопок
-  handleFeedback = (e) => {
+  onLeaveFeedback = (e) => {
     const { name } = e.currentTarget;
     this.setState(prevState => ({
       [name]: prevState[name] + 1,
@@ -39,7 +39,7 @@ class App extends Component {
   render() {
 
     const { good, neutral, bad } = this.state;
-    const { handleFeedback, totalFeedback, positiveFeedbackPercentage } = this;
+    const { onLeaveFeedback, totalFeedback, positiveFeedbackPercentage } = this;
         
     return (
 
@@ -47,9 +47,9 @@ class App extends Component {
           <h1>Please leave feedback</h1>
           
         <div>
-            <button type="button" name="good" onClick={this.handleFeedback}> Good </button>
-            <button type="button"  name="neutral" onClick={this.handleFeedback}> Neutral </button>
-            <button type="button"  name="bad" onClick={this.handleFeedback}> Bad </button>
+            <button type="button" name="good" onClick={this.onLeaveFeedback}> Good </button>
+            <button type="button"  name="neutral" onClick={this.onLeaveFeedback}> Neutral </button>
+            <button type="button"  name="bad" onClick={this.onLeaveFeedback}> Bad </button>
           </div>
 
         <Statistics
