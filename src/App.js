@@ -39,13 +39,27 @@ class App extends Component {
          })) 
  }
 
+  // Подсчитываем общую сумму
+  totalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return (good + neutral + bad);
+  };
+
+// Высчитываем пропрорцию (процент) позитивных откликов
+  positiveFeedbackPercentage = () => {
+    return Math.round(this.state.good * 100 / this.totalFeedback());
+
+  }
+
+
 
   render() {
 
-     const { good, neutral, bad } = this.state;
+    const { good, neutral, bad } = this.state;
+    const { totalFeedback, positiveFeedbackPercentage } = this;
      
-        const countTotalFeedback = good + neutral + bad;
-        const countPositiveFeedbackPercentage = Math.round(100*good/countTotalFeedback)
+        // let totalFeedback = this.state.good + this.state.neutral + this.state.bad;
+        // let positiveFeedbackPercentage = Math.round(100*good/totalFeedback)
 
    
     return (
@@ -67,15 +81,15 @@ class App extends Component {
         <p>Good:  { good }</p>
         <p>Neutral: { neutral }</p>
         <p>Bad: { bad }</p>
-        <p>Total: {countTotalFeedback} </p>
-        <p>Positive feedback: {countPositiveFeedbackPercentage } % </p>
+        <p>Total: {totalFeedback()} </p>
+        <p>Positive feedback: {positiveFeedbackPercentage()} % </p>
 
         <Statistics
           good={good}
           neutral={neutral}
           bad={bad}
-          total={countTotalFeedback }
-          positivePercentage={countPositiveFeedbackPercentage } />
+          totalFeedback={totalFeedback()}
+          positiveFeedbackPercentage={positiveFeedbackPercentage() } />
       </div>
     )
   }
