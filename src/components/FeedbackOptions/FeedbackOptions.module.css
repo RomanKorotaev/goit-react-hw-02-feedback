@@ -1,6 +1,6 @@
 .button {
-  /* display: flex;
-  align-items: center; */
+  font-size: 15px;
+  color: black;
 
   width: 70px;
   height: auto;
@@ -12,9 +12,14 @@
 
   background-color: rgb(160, 80, 11);
 
-  border: 1px solid rgb(228, 219, 219);
+  border: 1px solid black;
   border-radius: 15px;
   box-shadow: 10px 5px 5px black;
+}
+
+.button:hover {
+  color: white;
+  border: 1px solid rgb(228, 219, 219);
 }
 
 .container {
