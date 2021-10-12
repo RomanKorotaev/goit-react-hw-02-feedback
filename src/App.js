@@ -3,6 +3,9 @@
 import './App.css';
 import React, { Component } from 'react';
 import Statistics from './components/Statistics'
+import FeedbackOptions from './components/FeedbackOptions'
+import Section from './components/Section'
+import Notification from './components/Notification'
 
 class App extends Component {
 
@@ -13,7 +16,7 @@ class App extends Component {
 }
 
 
-// Общий обработчик для нескольких разных кнопок
+// Общий обработчик для нескольких разных кнопок (функция использовалась до выноса кнопок в отдельный компонент)
   onLeaveFeedback = (e) => {
     const { name } = e.currentTarget;
     this.setState(prevState => ({
@@ -21,6 +24,11 @@ class App extends Component {
     }));
   };
   
+    increment = (value) => () => {
+    this.setState((prevState) => ({
+      [value]: prevState[value] + 1,
+    }));
+  };
 
   // Подсчитываем общую сумму
   totalFeedback = () => {
@@ -40,24 +48,43 @@ class App extends Component {
 
     const { good, neutral, bad } = this.state;
     const { onLeaveFeedback, totalFeedback, positiveFeedbackPercentage } = this;
-        
+    
+    const options = Object.keys(this.state); //Назначаем каждой кнопке уникальный идентификатор (индекс массива)
+    // заносим свойства объекта this.state  в отдельный массив опций через функцию Object.keys(this.state)
+       
+    // console.log('options = Object.keys(this.state)', options)
+    
     return (
-
-      <div>
-          <h1>Please leave feedback</h1>
-          
-        <div>
+      <div className="containerApp">
+       
+        <Section title={'Please leave feedback'}>
+          <FeedbackOptions options={options} onLeaveFeedback={this.increment} />
+        </Section>
+                  
+          {/* <FeedbackOptions options={options} onLeaveFeedback={this.onLeaveFeedback} /> */}
+        {/* <div>
             <button type="button" name="good" onClick={this.onLeaveFeedback}> Good </button>
             <button type="button"  name="neutral" onClick={this.onLeaveFeedback}> Neutral </button>
             <button type="button"  name="bad" onClick={this.onLeaveFeedback}> Bad </button>
-          </div>
+          </div> */}
 
-        <Statistics
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          totalFeedback={totalFeedback()}
-          positiveFeedbackPercentage={positiveFeedbackPercentage() } />
+        {/* Вынесли кнопки с типом отзыва в отдельный компонент. Идентификация кнопок теперь не по имени, а по индексув массиве
+        В связи с этим использкем не функцию this.onLeaveFeedback c name, a  функцию this.increment  c value */}
+          
+
+          {totalFeedback() > 0 ? (
+          <Section title="Statistics">
+            <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            totalFeedback={totalFeedback()}
+              positiveFeedbackPercentage={positiveFeedbackPercentage()} />
+             </Section>
+             ) : (
+            <Notification message="No feedback given" />
+              )}
+         
       </div>
     )
   }
