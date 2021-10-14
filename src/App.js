@@ -32,6 +32,7 @@ class App extends Component {
 
   // Подсчитываем общую сумму
   totalFeedback = () => {
+    console.log('Подсчитываем общую сумму...')
     const { good, neutral, bad } = this.state;
     return (good + neutral + bad);
   };
